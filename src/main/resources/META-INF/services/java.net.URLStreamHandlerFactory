@@ -1,1 +1,1 @@
-sun.net.www.protocol.MavenURLStreamHandlerFactory
+com.btmssds.urlhandler.protocol.MavenURLStreamHandlerFactory
