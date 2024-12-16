@@ -7,7 +7,7 @@
     </parent>
     <groupId>com.btmssds.urlhandler</groupId>
     <artifactId>maven-url-handler-module</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <description>Wildfly module for handling 'maven:' urls</description>
 
     <url>https://github.com/cserhatit/maven-url-handler</url>
@@ -21,7 +21,7 @@
         <connection>scm:git:git@github.com:cserhatit/maven-url-handler.git</connection>
         <developerConnection>scm:git:git@github.com:cserhatit/maven-url-handler.git</developerConnection>
         <url>https://github.com/cserhatit/maven-url-handler</url>
-      <tag>maven-url-handler-module-1.0.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <issueManagement>
