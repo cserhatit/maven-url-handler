@@ -33,7 +33,7 @@ jobs:
       - name: Import GPG key
         uses: crazy-max/ghaction-import-gpg@v6
         with:
-          gpg_private_key: ${{ secrets.GPG_SIGNING_KEY_GITHUB_TECHUSER }}
+          gpg_private_key: ${{ secrets.GPG_SIGNING_KEY }}
           passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSPHRASE }}
       - name: Release
         uses: speter555/gh-action-mvn-release-main@v0.32.0
