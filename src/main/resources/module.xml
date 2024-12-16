@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
-<module xmlns="urn:jboss:module:1.3" name="com.btmssds.urlhandler">
+<module xmlns="urn:jboss:module:1.1" name="org.jboss.net.protocol">
     <resources>
         <resource-root path="${project.artifactId}-${project.version}.jar"/>
     </resources>
     <dependencies>
-        <module name="jboss-logging" />
+        <module name="org.jboss.logging" />
     </dependencies>
 </module>

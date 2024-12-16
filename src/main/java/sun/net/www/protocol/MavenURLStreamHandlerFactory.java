@@ -1,8 +1,8 @@
 /*-
  * #%L
- * Coffee
+ * maven-url-handler
  * %%
- * Copyright (C) 2020 i-Cell Mobilsoft Zrt.
+ * Copyright (C) 2023 - 2024 i-Cell Mobilsoft Zrt.
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,14 @@
  * limitations under the License.
  * #L%
  */
-package com.btmssds.urlhandler;
+package sun.net.www.protocol;
 
 import java.net.URLStreamHandler;
-import java.net.spi.URLStreamHandlerProvider;
+import java.net.URLStreamHandlerFactory;
 
 import org.jboss.logging.Logger;
 
-import com.btmssds.urlhandler.protocol.handler.MavenURLHandler;
+import sun.net.www.protocol.MavenURLHandler;
 
 /**
  * "maven" URL protocol olvasashoz szolgalo Provider. Regisztralni szukseges a
@@ -34,23 +34,25 @@ import com.btmssds.urlhandler.protocol.handler.MavenURLHandler;
  * @author imre.scheffer
  * @since 1.0.0
  */
-public class MavenURLStreamHandlerProvider extends URLStreamHandlerProvider {
+public class MavenURLStreamHandlerFactory implements URLStreamHandlerFactory {
 
-    private static final Logger LOGGER = Logger.getLogger(MavenURLStreamHandlerProvider.class);
+    private static final Logger LOGGER = Logger.getLogger(MavenURLStreamHandlerFactory.class);
     private static final String PREFIX = "sun.net.www.protocol";
+    private static final URLStreamHandler MAVEN_URL_HANDLER = new MavenURLHandler();
 
     /**
      * Default constructor, constructs a new object.
      */
-    public MavenURLStreamHandlerProvider() {
+    public MavenURLStreamHandlerFactory() {
         super();
+        LOGGER.info("MavenURLStreamHandlerFactory initialized");
     }
 
     /** {@inheritDoc} */
     @Override
     public URLStreamHandler createURLStreamHandler(String protocol) {
         LOGGER.info("MavenURLStreamHandlerProvider registered");
-        return "maven".equals(protocol) ? new MavenURLHandler() : createDefaultURLStreamHandler(protocol);
+        return "maven".equals(protocol) ? MAVEN_URL_HANDLER : createDefaultURLStreamHandler(protocol);
     }
 
     /**

@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.btmssds.urlhandler.protocol.handler;
+package sun.net.www.protocol;
 
 import java.io.IOException;
 import java.net.URL;
@@ -58,6 +58,7 @@ public class MavenURLHandler extends URLStreamHandler {
      */
     public MavenURLHandler() {
         super();
+        LOGGER.info("MavenURLHandler initialized");
     }
 
     /** {@inheritDoc} */
