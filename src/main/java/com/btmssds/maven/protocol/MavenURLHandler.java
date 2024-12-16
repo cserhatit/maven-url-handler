@@ -1,11 +1,28 @@
-package com.btmssds.urlhandler.protocol;
+/*-
+ * #%L
+ * maven-url-handler
+ * %%
+ * Copyright (C) 2023 - 2024 i-Cell Mobilsoft Zrt.
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package com.btmssds.maven.protocol;
 
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
-
-import org.jboss.logging.Logger;
 
 /**
  * Handling URL protocol for this format:
@@ -29,7 +46,7 @@ import org.jboss.logging.Logger;
  */
 public class MavenURLHandler extends URLStreamHandler {
 
-    private static final Logger LOGGER = Logger.getLogger(MavenURLHandler.class);
+    //private static final Logger LOGGER = Logger.getLogger(MavenURLHandler.class);
     
     private static final String SEPARATOR = "!";
     private static final String DIR_SEPARATOR = "/";
@@ -39,14 +56,16 @@ public class MavenURLHandler extends URLStreamHandler {
      */
     public MavenURLHandler() {
         super();
-        LOGGER.info("MavenURLHandler initialized");
+        //LOGGER.info("MavenURLHandler initialized");
+        System.out.println("MavenURLHandler initialized");
     }
 
     /** {@inheritDoc} */
     @Override
     protected URLConnection openConnection(URL url) throws IOException {
         if( url == null ) {
-            LOGGER.error("[MavenURLHandler] URL is null!");
+            //LOGGER.error("[MavenURLHandler] URL is null!");
+            System.out.println("[MavenURLHandler] URL is null!");
             return null;
         }
         String path = url.getPath();
