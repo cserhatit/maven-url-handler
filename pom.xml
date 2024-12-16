@@ -76,6 +76,15 @@
 
         <plugins>
             <plugin>
+              <groupId>org.sonatype.central</groupId>
+              <artifactId>central-publishing-maven-plugin</artifactId>
+              <version>0.6.0</version>
+              <extensions>true</extensions>
+              <configuration>
+                <publishingServerId>ossrh</publishingServerId>
+              </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
             </plugin>
