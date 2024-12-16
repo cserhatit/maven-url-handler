@@ -1,0 +1,40 @@
+= maven-url-handler
+
+Wildfly module for handling `maven:` urls
+
+Handling URL protocol for this format:
+
+== install
+
+This artifact must be installed as a wildfly module and server must be started with the additional JAVA_OPT value: `-Djboss.protocol.handler.modules=com.btmssds.maven.protocol`
+
+installing with jboss-cli.sh 
+
+`module add --name=com.btmssds.maven.protocol --resources=maven-url-handler-module-1.0.0.jar` 
+
+== usage 
+
+ maven:hu.icellmobilsoft.coffee:coffee-dto-xsd:jar::!/xsd/hu/icellmobilsoft/coffee/dto/common/common.xsd
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <public
+            publicId="http://common.dto.coffee.icellmobilsoft.hu/common"
+            uri="maven:hu.icellmobilsoft.coffee:coffee-dto-xsd:jar::!/xsd/hu/icellmobilsoft/coffee/dto/common/common.xsd" /> <1>
+</catalog>
+----
+<1> Schema definition will be read from the maven artifact `hu.icellmobilsoft.coffee:coffee-dto-xsd:jar` from the path `/xsd/hu/icellmobilsoft/coffee/dto/common/common.xsd`   
+
+== format
+
+`maven:groupId:artifactId:package:version:!file_path`
+
+* `protocol` - the URL schema protocol [maven]
+* `groupId` - the maven groupId [hu.icellmobilsoft.coffee.dto.xsd]
+* `artifactId` - the maven artifactId [coffee-dto-xsd]
+* `package` - the maven package [jar]
+* `version` - the maven version, optional
+* `file_path` - the path of the .xsd file inside the jar
+

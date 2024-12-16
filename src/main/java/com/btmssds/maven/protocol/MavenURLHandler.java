@@ -27,18 +27,6 @@ import java.net.URLStreamHandler;
 /**
  * Handling URL protocol for this format:
  *
- * <pre>
- * maven:hu.icellmobilsoft.coffee:coffee-dto-xsd:jar::!/xsd/hu/icellmobilsoft/coffee/dto/common/common.xsd
- * </pre>
- *
- * Format is: <code>maven:groupId:atifactId:package:version:!file_path</code>
- * <ul>
- * <li>protocol - URL schema protocol, in this case "maven"</li>
- * <li>hu.icellmobilsoft.coffee.dto.xsd - maven groupId</li>
- * <li>coffee-dto-xsd - maven artifactId</li>
- * <li>jar - maven package</li>
- * <li>maven version</li>
- * </ul>
  *
  * @author tamas.cserhati
  * @author imre.scheffer
@@ -46,8 +34,6 @@ import java.net.URLStreamHandler;
  */
 public class MavenURLHandler extends URLStreamHandler {
 
-    //private static final Logger LOGGER = Logger.getLogger(MavenURLHandler.class);
-    
     private static final String SEPARATOR = "!";
     private static final String DIR_SEPARATOR = "/";
 
@@ -56,16 +42,12 @@ public class MavenURLHandler extends URLStreamHandler {
      */
     public MavenURLHandler() {
         super();
-        //LOGGER.info("MavenURLHandler initialized");
-        System.out.println("MavenURLHandler initialized");
     }
 
     /** {@inheritDoc} */
     @Override
     protected URLConnection openConnection(URL url) throws IOException {
-        if( url == null ) {
-            //LOGGER.error("[MavenURLHandler] URL is null!");
-            System.out.println("[MavenURLHandler] URL is null!");
+        if (url == null) {
             return null;
         }
         String path = url.getPath();

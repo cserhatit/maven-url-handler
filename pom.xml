@@ -10,11 +10,11 @@
     <version>1.0.0-SNAPSHOT</version>
     <description>Wildfly module for handling 'maven:' urls</description>
 
-    <url>https://github.com/i-Cell-Mobilsoft-Open-Source/DookuG-backend</url>
-    <inceptionYear>2023</inceptionYear>
+    <url>https://github.com/cserhatit/maven-url-handler</url>
+    <inceptionYear>2024</inceptionYear>
 
     <properties>
-        <project.scm.id>icell-github-server</project.scm.id>
+        <project.scm.id>github-server</project.scm.id>
     </properties>
 
     <scm>
@@ -28,15 +28,6 @@
         <url>https://github.com/cserhatit/maven-url-handler/issues</url>
     </issueManagement>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-            <version>3.4.3.Final</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-
     <build>
         <pluginManagement>
             <plugins>
@@ -44,9 +35,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <configuration>
-                        <excludes>
-                            <exclude>**/module.xml</exclude> <!-- Kizárjuk a module.xml fájlt a JAR-ból -->
-                        </excludes>
                         <archive>
                             <manifestEntries>
                                 <git-commit>${buildNumber}</git-commit>
@@ -118,60 +106,6 @@
                 <groupId>io.smallrye</groupId>
                 <artifactId>jandex-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>create-wildfly-module-structure</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/wildfly-module</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/resources</directory>
-                                    <includes>
-                                        <include>module.xml</include>
-                                    </includes>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-    
-            <!-- create module -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/module-assembly.xml</descriptor>
-                    </descriptors>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>package-wildfly-module</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/main/assembly/module-assembly.xml</descriptor>
-                            </descriptors>
-                            <finalName>${project.artifactId}-${project.version}</finalName>
-                            <formats>
-                                <format>zip</format>
-                            </formats>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -226,8 +160,6 @@
                         <configuration>
                             <failOnError>true</failOnError>
                             <failOnWarnings>true</failOnWarnings>
-                            <excludePackageNames>hu.icellmobilsoft.dookug.schemas.*</excludePackageNames>
-                            <sourceFileExcludes>**/*_.java</sourceFileExcludes>
                         </configuration>
                     </plugin>
                 </plugins>

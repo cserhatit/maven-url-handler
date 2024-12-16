@@ -25,8 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * "maven" URL protocol olvasashoz szolgalo Provider. Regisztralni szukseges a
- * <code>src/main/resources/META-INF/services/java.net.URLStreamHandlerFactory</code> fajlban
+ * Provider for accessing 'maven' URL protocol. Need registered in the
+ * <code>src/main/resources/META-INF/services/java.net.URLStreamHandlerFactory</code> file
  *
  * @author tamas.cserhati
  * @author imre.scheffer
@@ -34,52 +34,16 @@ import java.util.Map;
  */
 public class MavenURLStreamHandlerFactory implements URLStreamHandlerFactory {
 
-    //private static final Logger LOGGER = Logger.getLogger(MavenURLStreamHandlerFactory.class);
     private static Map<String, URLStreamHandler> handlerMap = new HashMap<>(1);
-    private static final String PREFIX = "sun.net.www.protocol";
 
     static {
         handlerMap.put("maven", new MavenURLHandler());
     }
 
-    /**
-     * Default constructor, constructs a new object.
-     */
-    public MavenURLStreamHandlerFactory() {
-        super();
-        //LOGGER.info("MavenURLStreamHandlerFactory initialized");
-        System.out.println("MavenURLStreamHandlerFactory initialized");
-    }
-    
     /** {@inheritDoc} */
     @Override
     public URLStreamHandler createURLStreamHandler(String protocol) {
-        //LOGGER.info("MavenURLStreamHandlerProvider registered");
-        System.out.println("MavenURLStreamHandlerProvider registered");
-        return "maven".equals(protocol) ? handlerMap.get(protocol) : createDefaultURLStreamHandler(protocol);
-    }
-
-    /**
-     * Copy of {@code URL$DefaultFactory} class
-     * 
-     * @param protocol
-     *            the protocol
-     * 
-     * @return default {@code URLStreamHandler} or null in case of any exception
-     *
-     */
-    private URLStreamHandler createDefaultURLStreamHandler(String protocol) {
-        String name = PREFIX + "." + protocol + ".Handler";
-        try {
-            Object o = Class.forName(name).getDeclaredConstructor().newInstance();
-            return (URLStreamHandler) o;
-        } catch (Exception e) {
-            System.out.println("[WARN] createDefaultURLStreamHandler was throwing an exception: " + e.getLocalizedMessage());
-            //LOGGER.warn("createDefaultURLStreamHandler was throwing an exception: " + e.getLocalizedMessage());
-            // For compatibility, all Exceptions are ignored.
-            // any number of exceptions can get thrown here
-        }
-        return null;
+        return handlerMap.get(protocol);
     }
 
 }
