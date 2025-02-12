@@ -1,21 +1,64 @@
 = maven-url-handler
 
-Wildfly module for handling `maven:` urls
+Universal `maven:` urls handling module. Can be used in Wildfly and Tomcat (Spring Boot) applications.
 
-Handling URL protocol for this format:
+== format
+Handling URL protocol for maven dependency format (like other protocols: `http`, `file`, `ftp` etc.), example:
 
-== install
+ maven:hu.icellmobilsoft.coffee:coffee-dto-xsd:jar::!/xsd/hu/icellmobilsoft/coffee/dto/common/common.xsd
 
+The format is: `maven:groupId:artifactId:package:version:!file_path`
+
+* `protocol` - the URL schema protocol [maven]
+* `groupId` - the maven groupId [hu.icellmobilsoft.coffee.dto.xsd]
+* `artifactId` - the maven artifactId [coffee-dto-xsd]
+* `package` - the maven package [jar]
+* `version` - the maven version, optional
+* `file_path` - the path of the .xsd file inside the jar
+
+== Install
+To properly use this module, the java URL protocol handler must be registered in the application server. It can be done by adding the module to the server, or by adding the handler to the application.
+
+=== Wildfly
 This artifact must be installed as a wildfly module and server must be started with the additional JAVA_OPT value: `-Djboss.protocol.handler.modules=com.btmssds.maven.protocol`
 
 installing with jboss-cli.sh 
 
 `module add --name=com.btmssds.maven.protocol --resources=maven-url-handler-module-1.0.0.jar` 
 
+=== Tomcat (Spring Boot)
+
+[source,java]
+----
+import jakarta.annotation.PostConstruct;
+
+import com.btmssds.maven.protocol.MavenUrlStreamHandlerProvider;
+import org.apache.catalina.webresources.TomcatURLStreamHandlerFactory;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class Starter {
+
+    @PostConstruct
+    private void init() {
+        TomcatURLStreamHandlerFactory.getInstance().addUserFactory(new MavenUrlStreamHandlerProvider());
+    }
+}
+----
+
 == usage 
 
- maven:hu.icellmobilsoft.coffee:coffee-dto-xsd:jar::!/xsd/hu/icellmobilsoft/coffee/dto/common/common.xsd
+.Maven dependency
+[source,xml]
+----
+<dependency>
+    <groupId>com.btmssds.urlhandler</groupId>
+    <artifactId>maven-url-handler-module</artifactId>
+    <version>VERSION</version>
+</dependency>
+----
 
+.Using in XML catalog
 [source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -26,15 +69,4 @@ installing with jboss-cli.sh
 </catalog>
 ----
 <1> Schema definition will be read from the maven artifact `hu.icellmobilsoft.coffee:coffee-dto-xsd:jar` from the path `/xsd/hu/icellmobilsoft/coffee/dto/common/common.xsd`   
-
-== format
-
-`maven:groupId:artifactId:package:version:!file_path`
-
-* `protocol` - the URL schema protocol [maven]
-* `groupId` - the maven groupId [hu.icellmobilsoft.coffee.dto.xsd]
-* `artifactId` - the maven artifactId [coffee-dto-xsd]
-* `package` - the maven package [jar]
-* `version` - the maven version, optional
-* `file_path` - the path of the .xsd file inside the jar
 
